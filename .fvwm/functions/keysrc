@@ -40,25 +40,10 @@ Key XF86AudioMute A A Exec pactl set-sink-mute 0 toggle 	      # > Volume Muted
 
 # Thumbnail
 
-Key d A 4S DeThumbnail
-Key T a 4S Thumbnail
-
-# Controle de volume (Alsa)
+Key q A 4S Thumbnail
 
 # Esse comando do teclado ira tirar um print da tela
 Key Print A 4 Exec exec scrot 'My_FVWM_%a-%d%b%y_%H.%M.png' -e 'viewnior ~/$f'
-
-# Esse comando do teclado chama um menu na tela,
-# para controlar o programa de musicas (Mpd)
-Key m A 4 Exec exec $[HOME]/.fvwm/scripts/mpd.sh
-
-# Esse comando de teclado chama um menu na tela,
-# para que o usuario escolha onde a barra de titulos das janelas estarão localizadas
-Key w A 4 Exec exec $[HOME]/.fvwm/scripts/Set_Window_Bar.sh
-
-# Esse comando do teclado ira chamar um menu na tela,
-# dando opçoes de prints da tela
-Key p A 4 Exec exec $[HOME]/.fvwm/scripts/print.sh
 
 #======================================================
 # Comandos do teclado para janelas e areas de trabalho

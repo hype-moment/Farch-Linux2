@@ -5,7 +5,7 @@
 
 # Cores das janelas 
  Colorset 1 RootTransparent buffer, fg #FFFFFF, bg average, \
-     Tint #121212 100
+     Tint #E66100 100
 
 # Cores das bordas
 Colorset 2 bg #121212

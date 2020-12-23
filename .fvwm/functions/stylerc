@@ -39,6 +39,8 @@ Style xfce4-panel !Title, PositionPlacement Right, !Borders, Handles, Sticky, \
 
 Style plank !Title, PositionPlacement Right, !Borders, Handles, Sticky, \
               
+Style polybar !Title, PositionPlacement Right, !Borders, Handles, Sticky, \
+
 Style feh PositionPlacement Center, !Title, Borders
 
 Style viewnior PositionPlacement Center, Title, Borders
@@ -50,6 +52,9 @@ Style "xfce4-terminal" PositionPlacement Center
 Style thunar PositionPlacement Center
 
 Style yad !Title, !Borders, !Handles, !Sticky \
+				WindowListSkip, NeverFocus
+
+Style xfce4-appfinder !Title, !Borders, !Handles, !Sticky \
 				WindowListSkip, NeverFocus
 
 Style lxappearance PositionPlacement Center

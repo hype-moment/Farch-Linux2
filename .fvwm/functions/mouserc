@@ -33,6 +33,7 @@ AddToFunc RaiseMove
 
 # Menus
 Mouse 1 R A Exec exec pkill yad
+Mouse 3 R A Exec exec sh ~/.fvwm/yad/draw.sh
 
 # Janelas minimizas
 Mouse 1 I A Iconify off
