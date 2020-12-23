@@ -100,6 +100,13 @@ DISK(){
 		echo " $Root  $Home"	
 }
 
+PACMAN(){
+	Packs=$(pacman -Q | wc -l)
+	Cache=$(find /var/cache/pacman/pkg | wc -l)
+
+		echo " $Packs  $Cache"
+}
+
 case $1 in 
 	repeat) Repeat 	;;
 	random) Random 	;;
@@ -109,5 +116,6 @@ case $1 in
 	cpu) CPU 	;;
 	distro) DISTRO 	;;
 	kernel) KERNEL 	;;
-	disk)	DISK 	;;
+	disk) DISK 	;;
+	pac) PACMAN 	;;
 esac
