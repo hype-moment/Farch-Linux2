@@ -47,26 +47,36 @@ Alfa=$(cat ~/.config/tint2/tools.tint2rc | grep "background_color =" | awk '{pri
 foo=$?
 
 if [[ $foo -eq 1 ]]; then
-sed -i 's/gtk-theme-name=.*/gtk-theme-name=Midnight/g' ~/.config/gtk-3.0/settings.ini
+sed -i 's/131313/FFFFFF/g' ~/.themes/Midnight/gtk-3.0/gtk.css
+sed -i 's/F5F5F5/121212/g' ~/.themes/Midnight/gtk-3.0/gtk.css
+sed -i 's/141414/ffffff/g' ~/.themes/Midnight/gtk-3.0/gtk.css
+#sed -i 's/gtk-theme-name=.*/gtk-theme-name=Midnight/g' ~/.config/gtk-3.0/settings.ini
 sed -i 's/Colorset 2 bg.*/Colorset 2 bg #121212/g' ~/.fvwm/functions/window_decorrc
-sed -i 's/gtk-theme-name=.*/gtk-theme-name="Midnight"/g' ~/.gtkrc-2.0
+#sed -i 's/gtk-theme-name=.*/gtk-theme-name="Midnight"/g' ~/.gtkrc-2.0
 sed -i 's/Mini-menu-.*/Mini-menu-dark.rasi -show drun/g' ~/.config/tint2/tools.tint2rc
 sed -i "s/background_color = .*/background_color = #121212 "$Alfa"/g" ~/.config/tint2/tools.tint2rc
-sed -i "s/border_color .*/border_color = #F5F5F5 "$Alfa"/g" ~/.config/tint2/tools.tint2rc
+#sed -i "s/border_color .*/border_color = #F5F5F5 "$Alfa"/g" ~/.config/tint2/tools.tint2rc
 sed -i "s/background_color = .*/background_color = #121212 "$Alfa"/g" ~/.config/tint2/tint2rc
-sed -i "s/border_color .*/border_color = #F5F5F5 "$Alfa"/g" ~/.config/tint2/tint2rc
+#sed -i "s/border_color .*/border_color = #F5F5F5 "$Alfa"/g" ~/.config/tint2/tint2rc
+sed -i "s/font_color .*/font_color = #F5F5F5 100/g" ~/.config/tint2/tint2rc
+sed -i "s/font_color .*/font_color = #F5F5F5 100/g" ~/.config/tint2/tools.tint2rc
 pkill tint2
 tint2 & tint2 -c ~/.config/tint2/tools.tint2rc
 
 elif [[ $foo -eq 2 ]]; then
-sed -i 's/gtk-theme-name=.*/gtk-theme-name=Midday/g' ~/.config/gtk-3.0/settings.ini
+sed -i 's/FFFFFF/131313/g' ~/.themes/Midnight/gtk-3.0/gtk.css # Fonte
+sed -i 's/121212/F5F5F5/g' ~/.themes/Midnight/gtk-3.0/gtk.css # Fundo
+sed -i 's/ffffff/141414/g' ~/.themes/Midnight/gtk-3.0/gtk.css
+#sed -i 's/gtk-theme-name=.*/gtk-theme-name=Midday/g' ~/.config/gtk-3.0/settings.ini
 sed -i 's/Colorset 2 bg.*/Colorset 2 bg #F5F5F5/g' ~/.fvwm/functions/window_decorrc
-sed -i 's/gtk-theme-name=.*/gtk-theme-name="Midday"/g' ~/.gtkrc-2.0
+#sed -i 's/gtk-theme-name=.*/gtk-theme-name="Midday"/g' ~/.gtkrc-2.0
 sed -i 's/Mini-menu-.*/Mini-menu-white.rasi -show drun/g' ~/.config/tint2/tools.tint2rc
 sed -i "s/background_color = .*/background_color = #F5F5F5 "$Alfa"/g" ~/.config/tint2/tools.tint2rc
-sed -i "s/border_color .*/border_color = #121212 "$Alfa"/g" ~/.config/tint2/tools.tint2rc
+#sed -i "s/border_color .*/border_color = #121212 "$Alfa"/g" ~/.config/tint2/tools.tint2rc
 sed -i "s/background_color = .*/background_color = #F5F5F5 "$Alfa"/g" ~/.config/tint2/tint2rc
-sed -i "s/border_color .*/border_color = #121212 "$Alfa"/g" ~/.config/tint2/tint2rc
+#sed -i "s/border_color .*/border_color = #121212 "$Alfa"/g" ~/.config/tint2/tint2rc
+sed -i "s/font_color .*/font_color = #121212 100/g" ~/.config/tint2/tint2rc
+sed -i "s/font_color .*/font_color = #121212 100/g" ~/.config/tint2/tools.tint2rc
 pkill tint2
 tint2 & tint2 -c ~/.config/tint2/tools.tint2rc 
 
@@ -100,7 +110,9 @@ fi
 }
 
 SET_COLOR(){
+	frame_=$(cat ~/.config/tint2/tint2rc | grep "background_color =" | awk '{print $4}')
 	Value=$(cat ~/.fvwm/functions/window_decorrc | grep Tint | awk '{print $2}')
+		
 YAD=$(pkill yad
       yad --posx=46 --posy=193 --image=$HOME/.fvwm/yad/Pop_Icons/colors.png \
 		  --init-color=$Value --color --gtk-palette --fixed)
@@ -108,8 +120,24 @@ YAD=$(pkill yad
 	for i in "$YAD"; do
 		if [[ $i > 0 ]];then
 			sed -i "s/Tint .*/Tint $i 100/g" ~/.fvwm/functions/window_decorrc
+			sed -i "s/border_color.*/border_color = $i $frame_/g" ~/.config/tint2/tint2rc
+			sed -i "s/border_color.*/border_color = $i $frame_/g" ~/.config/tint2/tools.tint2rc
+			pkill tint2
+			tint2 -c ~/.config/tint2/tools.tint2rc & tint2
 		fi
-	done 
+	done
+
+	Color_Dark=$(cat .themes/Midnight/gtk-3.0/gtk.css | grep secondary-caret | awk '{print $2}' | sed 's/[#;]//g')
+	Act_Color=$(cat .fvwm/functions/window_decorrc | grep Tint | awk '{print $2}' | sed 's/#//g')
+
+	for i in ${Act_Color}; do
+		if [[ "$i" -eq "121212" ]]; then
+			exit 0
+		else
+			sleep 3;	sed -i "s/$Color_Dark/$Act_Color/g" ~/.themes/Midnight/gtk-3.0/gtk.css
+
+		fi
+	done
 }
 
 SET_ICONS(){
@@ -221,9 +249,9 @@ img=(`find ~/Imagens -name '*' -exec file {} \; | grep -o -P '^.+: \w+ image' | 
    feh --bg-scale "${img[$RANDOM % ${#img[@]} ]}"
 
 exec $img
-return
 
 }
+
 
 TRANSPARENCE_BAR(){
 pkill yad
@@ -285,10 +313,11 @@ Search
 
 POWER(){
 pkill yad
+
 SHUTDOWN(){
 
 yad --timeout=10 --timeout-indicator=bottom \
-	--width=500 --posx=550 --posy=400 \
+	--width=500 --center \
 	--text="Shutdown in 10 seconds" --text-align=center --auto-close \
     --button="Cancel":1 
 foo=$?
