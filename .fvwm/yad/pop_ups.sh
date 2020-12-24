@@ -3,7 +3,7 @@
 BORDERS_RADIUS(){
 Value=$(cat ~/.fvwm/picom.conf | grep corner-radius | sed 's/.*= //g;s/;//g')
 YAD=$(pkill yad
-		yad --scale --posx=46 --posy=37 --image=$HOME/.fvwm/yad/Pop_Icons/radius.png \
+		yad --text="Border Radius" --scale --posx=46 --posy=37 \
 			--width=300 --inc-buttons --min-value=1 --max-value=12 --value="$Value" )
 	  	
 	for i in "$YAD"; do
@@ -26,7 +26,7 @@ FRAME_TRANSPARENCE(){
 Value=$(cat ~/.fvwm/picom.conf | grep frame-opacity | awk '{print $3}' | sed 's/.*\.//g;s/;//g')
 YAD=$(pkill yad
 	  yad --scale --posx=46 --posy=76 \
-		  --image=$HOME/.fvwm/yad/Pop_Icons/frame.png \
+		  --text="Frame Transparency" \
 		  --width=300 --inc-buttons --min-value=1 --max-value=99 --value="$Value")
 
 	for i in "$YAD"; do
@@ -39,7 +39,7 @@ YAD=$(pkill yad
 THEME_MODE(){
 Alfa=$(cat ~/.config/tint2/tools.tint2rc | grep "background_color =" | awk '{print $4}')
 	pkill yad
-	yad --posx=46 --posy=115 --image=$HOME/.fvwm/yad/Pop_Icons/theme-mode.png \
+	yad --posx=46 --posy=115 --text="Mode"\
 		--fixed --buttons-layout=center \
 		--button="Dark !$HOME/.fvwm/yad/Icons/dark.png":1 \
 		--button="Light !$HOME/.fvwm/yad/Icons/light.png":2 \
@@ -50,31 +50,23 @@ if [[ $foo -eq 1 ]]; then
 sed -i 's/131313/FFFFFF/g' ~/.themes/Midnight/gtk-3.0/gtk.css
 sed -i 's/F5F5F5/121212/g' ~/.themes/Midnight/gtk-3.0/gtk.css
 sed -i 's/141414/ffffff/g' ~/.themes/Midnight/gtk-3.0/gtk.css
-#sed -i 's/gtk-theme-name=.*/gtk-theme-name=Midnight/g' ~/.config/gtk-3.0/settings.ini
 sed -i 's/Colorset 2 bg.*/Colorset 2 bg #121212/g' ~/.fvwm/functions/window_decorrc
-#sed -i 's/gtk-theme-name=.*/gtk-theme-name="Midnight"/g' ~/.gtkrc-2.0
 sed -i 's/Mini-menu-.*/Mini-menu-dark.rasi -show drun/g' ~/.config/tint2/tools.tint2rc
 sed -i "s/background_color = .*/background_color = #121212 "$Alfa"/g" ~/.config/tint2/tools.tint2rc
-#sed -i "s/border_color .*/border_color = #F5F5F5 "$Alfa"/g" ~/.config/tint2/tools.tint2rc
 sed -i "s/background_color = .*/background_color = #121212 "$Alfa"/g" ~/.config/tint2/tint2rc
-#sed -i "s/border_color .*/border_color = #F5F5F5 "$Alfa"/g" ~/.config/tint2/tint2rc
 sed -i "s/font_color .*/font_color = #F5F5F5 100/g" ~/.config/tint2/tint2rc
 sed -i "s/font_color .*/font_color = #F5F5F5 100/g" ~/.config/tint2/tools.tint2rc
 pkill tint2
 tint2 & tint2 -c ~/.config/tint2/tools.tint2rc
 
 elif [[ $foo -eq 2 ]]; then
-sed -i 's/FFFFFF/131313/g' ~/.themes/Midnight/gtk-3.0/gtk.css # Fonte
-sed -i 's/121212/F5F5F5/g' ~/.themes/Midnight/gtk-3.0/gtk.css # Fundo
+sed -i 's/FFFFFF/131313/g' ~/.themes/Midnight/gtk-3.0/gtk.css
+sed -i 's/121212/F5F5F5/g' ~/.themes/Midnight/gtk-3.0/gtk.css
 sed -i 's/ffffff/141414/g' ~/.themes/Midnight/gtk-3.0/gtk.css
-#sed -i 's/gtk-theme-name=.*/gtk-theme-name=Midday/g' ~/.config/gtk-3.0/settings.ini
 sed -i 's/Colorset 2 bg.*/Colorset 2 bg #F5F5F5/g' ~/.fvwm/functions/window_decorrc
-#sed -i 's/gtk-theme-name=.*/gtk-theme-name="Midday"/g' ~/.gtkrc-2.0
 sed -i 's/Mini-menu-.*/Mini-menu-white.rasi -show drun/g' ~/.config/tint2/tools.tint2rc
 sed -i "s/background_color = .*/background_color = #F5F5F5 "$Alfa"/g" ~/.config/tint2/tools.tint2rc
-#sed -i "s/border_color .*/border_color = #121212 "$Alfa"/g" ~/.config/tint2/tools.tint2rc
 sed -i "s/background_color = .*/background_color = #F5F5F5 "$Alfa"/g" ~/.config/tint2/tint2rc
-#sed -i "s/border_color .*/border_color = #121212 "$Alfa"/g" ~/.config/tint2/tint2rc
 sed -i "s/font_color .*/font_color = #121212 100/g" ~/.config/tint2/tint2rc
 sed -i "s/font_color .*/font_color = #121212 100/g" ~/.config/tint2/tools.tint2rc
 pkill tint2
@@ -86,7 +78,7 @@ fi
 POSITION(){
 	pkill yad
 	yad --posx=46 --posy=153 --buttons-layout=center \
-		--fixed --image=$HOME/.fvwm/yad/Pop_Icons/window-position.png \
+		--fixed --text="Title Bar Position" \
 		--button="Left !$HOME/.fvwm/yad/Icons/left.png":1 \
 		--button="Top !$HOME/.fvwm/yad/Icons/top.png":2 \
 		--button="Right !$HOME/.fvwm/yad/Icons/right.png":3 \
@@ -114,7 +106,7 @@ SET_COLOR(){
 	Value=$(cat ~/.fvwm/functions/window_decorrc | grep Tint | awk '{print $2}')
 		
 YAD=$(pkill yad
-      yad --posx=46 --posy=193 --image=$HOME/.fvwm/yad/Pop_Icons/colors.png \
+      yad --posx=46 --posy=193 --text"Theme Colors" \
 		  --init-color=$Value --color --gtk-palette --fixed)
 
 	for i in "$YAD"; do
@@ -142,7 +134,7 @@ YAD=$(pkill yad
 
 SET_ICONS(){
 	pkill yad	
-	yad --posx=46 --posy=232 --image=$HOME/.fvwm/yad/Pop_Icons/window-icons.png \
+	yad --posx=46 --posy=232 --text="Window Icons"\
 		--fixed --buttons-layout=center \
 		--button="Blocks":1 \
 		--button="Cicles":2 \
@@ -177,7 +169,7 @@ fi
 PRINT(){
 	pkill yad
 	yad --posx=46 --posy=270 --buttons-layout=center \
-		--fixed  --image=$HOME/.fvwm/yad/Pop_Icons/screenshot.png \
+		--fixed  --text="ScreenShot" \
 		--button="!$HOME/.fvwm/yad/Icons/shot.png":1 \
 		--button="!$HOME/.fvwm/yad/Icons/cut.png":2 \
 		--button="!$HOME/.fvwm/yad/Icons/time.png":3 \
@@ -203,7 +195,7 @@ fi
 MPD(){
 	pkill yad
 	yad --posx=46 --posy=310 --buttons-layout=center \
-		--fixed --image=$HOME/.fvwm/yad/Pop_Icons/music.png \
+		--fixed --text="Music Control" \
 		--button="!$HOME/.fvwm/yad/Icons/music.png":1 \
 		--button="!$HOME/.fvwm/yad/Icons/prev.png":2 \
 		--button="!$HOME/.fvwm/yad/Icons/play.png":3 \
@@ -257,7 +249,7 @@ TRANSPARENCE_BAR(){
 pkill yad
 Value=$(cat ~/.config/tint2/tools.tint2rc | grep "background_color =" | awk '{print $4}')
 Color=$(cat ~/.config/tint2/tools.tint2rc | grep "background_color =" | awk '{print $3}')
-YAD=$(yad --posx=46 --posy=388 --image=$HOME/.fvwm/yad/Pop_Icons/bar.png \
+YAD=$(yad --posx=46 --posy=388 --text="Transparency Bar" \
           --scale --min-value=1 --max-value=99 --value="$Value" --fixed)
 
 	for i in "$YAD"; do
@@ -330,7 +322,7 @@ fi
 }
 
 	yad --center --buttons-layout=center \
-		--fixed --image=$HOME/.fvwm/yad/Pop_Icons/power.png \
+		--fixed --text="Power Menu" \
 		--button="!$HOME/.fvwm/yad/Icons/power.png":1 \
 		--button="!$HOME/.fvwm/yad/Icons/reboot.png":2 \
 		--button="!$HOME/.fvwm/yad/Icons/lock.png":3 \
