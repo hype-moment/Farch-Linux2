@@ -5,15 +5,18 @@
 
 # Cores das janelas 
  Colorset 1 RootTransparent buffer, fg #FFFFFF, bg average, \
-     Tint #E66100 100
+     Tint #00FFFF 100
 
 # Cores das bordas
-Colorset 2 bg #121212
+# Colorset 2 bg #121212
+
+Colorset 2 RootTransparent buffer, fg #FFFFFF, bg average, \
+     .Tint #00FFFF 100
 
 AddTitleStyle Colorset NN PP
    Style * TitleAtLeft
    Style * Colorset 1, HilightColorset 1        # Com de fundo e dos textos
-   Style * BorderWidth 1, HandleWidth 8         # Largura das bordas
+   Style * BorderWidth 10, HandleWidth 2         # Largura das bordas
    BorderStyle Inactive Colorset 2 -- flat      # Cor das janelas inativas
    BorderStyle Active   Colorset 2 -- flat      # Cor das janelas ativas
    TitleStyle AllInactive Colorset 1 -- flat    # Cor do titulo inactivo
@@ -28,7 +31,7 @@ AddTitleStyle Colorset NN PP
 # [1 3 5 7 9]  [T T T T T]   [0 8 6 4 2]
 
 # Estilo do titulo
-TitleStyle Centered Height 40 -- Flat
+TitleStyle Centered Height 60 -- Flat
 ButtonStyle Reset
 ButtonStyle All -- Flat
 ButtonStyle All -- UseTitleStyle
@@ -59,6 +62,6 @@ AddButtonStyle 6 \
 # Fecha a janelas
 Mouse 1 2 A Close
 # Maximiza e desmaximiza a janela   
-Mouse 1 4 A Maximize ToggleTitle
+Mouse 1 4 A Maximize
 # Semelhante a minimizar, porem ira criar uma thumbnail da janela
 Mouse 1 6 A Thumbnail

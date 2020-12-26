@@ -1,5 +1,16 @@
 #!/bin/bash
 
+###############################################################
+# Nome: PCFvwm "Popups de controle Fvwm"
+# Criado por: Diego Cesare <diegocesare300491@gmail.com>
+# Descrição: Um conjunto de ferramentas para manipular e,
+# configurar o gerenciador de janelas Fvwm
+###############################################################
+
+# Controle do raio das bordas, por padrao o maximo ira de 1 a 12,
+# se quiser almentar o raio da borda, altere (--max-value=12), para
+# o valor desejado.
+
 BORDERS_RADIUS(){
 Value=$(cat ~/.fvwm/picom.conf | grep corner-radius | sed 's/.*= //g;s/;//g')
 YAD=$(pkill yad
@@ -14,13 +25,17 @@ YAD=$(pkill yad
 	done 
 }
 
+# Calendario simples
+
 CALENDAR(){
 	pkill yad
-	yad --calendar --posx=50 --posy=693 \
+	yad	--calendar --posx=50 --posy=693 \
 		--width=400 \
-		--no-buttons 
+		--no-buttons \
+		
 }
 
+# Controle da transparencia das bordas das janelas e das barras de titulos
 
 FRAME_TRANSPARENCE(){
 Value=$(cat ~/.fvwm/picom.conf | grep frame-opacity | awk '{print $3}' | sed 's/.*\.//g;s/;//g')
@@ -36,17 +51,26 @@ YAD=$(pkill yad
 	done 
 }
 
+# Controle do modo podendo ser usado o tema escuro ou claro
+
 THEME_MODE(){
+
 Alfa=$(cat ~/.config/tint2/tools.tint2rc | grep "background_color =" | awk '{print $4}')
-	pkill yad
-	yad --posx=46 --posy=115 --text="Mode"\
-		--fixed --buttons-layout=center \
-		--button="Dark !$HOME/.fvwm/yad/Icons/dark.png":1 \
-		--button="Light !$HOME/.fvwm/yad/Icons/light.png":2 \
+	
+pkill yad
+yad --posx=46 --posy=115 --text="Mode"\
+	--fixed --buttons-layout=center \
+	--button="Dark !$HOME/.fvwm/yad/Icons/dark.png":1 \
+	--button="Light !$HOME/.fvwm/yad/Icons/light.png":2 \
 
 foo=$?
 
 if [[ $foo -eq 1 ]]; then
+yad --timeout=5 --timeout-indicator=bottom \
+	--width=500 --center \
+   	--text="Applying theme. Please wait" --text-align=center --auto-close \
+   	--no-buttons
+sleep 1
 sed -i 's/131313/FFFFFF/g' ~/.themes/Midnight/gtk-3.0/gtk.css
 sed -i 's/F5F5F5/121212/g' ~/.themes/Midnight/gtk-3.0/gtk.css
 sed -i 's/141414/ffffff/g' ~/.themes/Midnight/gtk-3.0/gtk.css
@@ -58,8 +82,14 @@ sed -i "s/font_color .*/font_color = #F5F5F5 100/g" ~/.config/tint2/tint2rc
 sed -i "s/font_color .*/font_color = #F5F5F5 100/g" ~/.config/tint2/tools.tint2rc
 pkill tint2
 tint2 & tint2 -c ~/.config/tint2/tools.tint2rc
+xdotool key super+shift+r
 
 elif [[ $foo -eq 2 ]]; then
+yad --timeout=5 --timeout-indicator=bottom \
+	--width=500 --center \
+   	--text="Applying theme. Please wait" --text-align=center --auto-close \
+   	--no-buttons
+sleep 1
 sed -i 's/FFFFFF/131313/g' ~/.themes/Midnight/gtk-3.0/gtk.css
 sed -i 's/121212/F5F5F5/g' ~/.themes/Midnight/gtk-3.0/gtk.css
 sed -i 's/ffffff/141414/g' ~/.themes/Midnight/gtk-3.0/gtk.css
@@ -71,9 +101,13 @@ sed -i "s/font_color .*/font_color = #121212 100/g" ~/.config/tint2/tint2rc
 sed -i "s/font_color .*/font_color = #121212 100/g" ~/.config/tint2/tools.tint2rc
 pkill tint2
 tint2 & tint2 -c ~/.config/tint2/tools.tint2rc 
-
+xdotool key super+shift+r
 fi
+
 }
+
+# Controle para mudar a posiçao das barras de titulos, podendo se mudas para
+# esquerda,topo,direita e abaixo
 
 POSITION(){
 	pkill yad
@@ -88,53 +122,59 @@ foo=$?
 
 if [[ $foo -eq 1 ]]; then
 sed -i 's/TitleAt.*/TitleAtLeft/g' ~/.fvwm/functions/window_decorrc && exit 0
-
+xdotool key super+shift+r
 elif [[ $foo -eq 2 ]]; then
 sed -i 's/TitleAt.*/TitleAtTop/g' ~/.fvwm/functions/window_decorrc && exit 0
-
+xdotool key super+shift+r
 elif [[ $foo -eq 3 ]]; then
 sed -i 's/TitleAt.*/TitleAtRight/g' ~/.fvwm/functions/window_decorrc && exit 0
-
+xdotool key super+shift+r
 elif [[ $foo -eq 4 ]]; then
 sed -i 's/TitleAt.*/TitleAtBottom/g' ~/.fvwm/functions/window_decorrc && exit 0
-
+xdotool key super+shift+r
 fi
 }
 
+# Ferramenta para alterar as cores da bordas das barras, barras de titulos das jenelas
+# e alguns aspectos dos temas GTK como, caixas de dialogos,mesnus etc...
+
 SET_COLOR(){
-	frame_=$(cat ~/.config/tint2/tint2rc | grep "background_color =" | awk '{print $4}')
-	Value=$(cat ~/.fvwm/functions/window_decorrc | grep Tint | awk '{print $2}')
-		
+Value=$(cat ~/.fvwm/functions/window_decorrc | grep Tint | awk '{print $2}')
+Color_Dark=$(cat ~/.themes/Midnight/gtk-3.0/gtk.css | grep secondary-caret | awk '{print $2}' | sed 's/;//g')
+Act_Color=$(cat ~/.fvwm/functions/window_decorrc | grep Tint | awk '{print $2}' | sed 's/#//g')
+frame_=$(cat ~/.config/tint2/tint2rc | grep "background_color =" | awk '{print $4}')
+
 YAD=$(pkill yad
       yad --posx=46 --posy=193 --text"Theme Colors" \
-		  --init-color=$Value --color --gtk-palette --fixed)
+		  --init-color=$Value --color --gtk-palette --fixed \ )  
+
 
 	for i in "$YAD"; do
-		if [[ $i > 0 ]];then
+		if [[ "$i" != "#121212" ]];then
+			sed -i "s/$Color_Dark/$i/g" ~/.themes/Midnight/gtk-3.0/gtk.css
 			sed -i "s/Tint .*/Tint $i 100/g" ~/.fvwm/functions/window_decorrc
 			sed -i "s/border_color.*/border_color = $i $frame_/g" ~/.config/tint2/tint2rc
 			sed -i "s/border_color.*/border_color = $i $frame_/g" ~/.config/tint2/tools.tint2rc
 			pkill tint2
 			tint2 -c ~/.config/tint2/tools.tint2rc & tint2
+			xdotool key super+shift+r
+		elif [[ "$i" == "#121212" ]]; then
+			sed -i "s/Tint .*/Tint $i 100/g" ~/.fvwm/functions/window_decorrc
+			sed -i "s/border_color.*/border_color = $i $frame_/g" ~/.config/tint2/tint2rc
+			sed -i "s/border_color.*/border_color = $i $frame_/g" ~/.config/tint2/tools.tint2rc
+			pkill tint2
+			tint2 -c ~/.config/tint2/tools.tint2rc & tint2
+			xdotool key super+shift+r
 		fi
 	done
 
-	Color_Dark=$(cat .themes/Midnight/gtk-3.0/gtk.css | grep secondary-caret | awk '{print $2}' | sed 's/[#;]//g')
-	Act_Color=$(cat .fvwm/functions/window_decorrc | grep Tint | awk '{print $2}' | sed 's/#//g')
-
-	for i in ${Act_Color}; do
-		if [[ "$i" -eq "121212" ]]; then
-			exit 0
-		else
-			sleep 3;	sed -i "s/$Color_Dark/$Act_Color/g" ~/.themes/Midnight/gtk-3.0/gtk.css
-
-		fi
-	done
 }
+
+# Ferramenta para alterar os icones das barras de titulos
 
 SET_ICONS(){
 	pkill yad	
-	yad --posx=46 --posy=232 --text="Window Icons"\
+	yad --posx=46 --posy=232 --text="Window Icons" \
 		--fixed --buttons-layout=center \
 		--button="Blocks":1 \
 		--button="Cicles":2 \
@@ -147,24 +187,27 @@ foo=$?
 
 if [[ $foo -eq 1 ]]; then
 sed -i 's/icons\/.*/icons\/blocks/g' ~/.fvwm/config && exit 0
-
+xdotool key super+shift+r
 elif [[ $foo -eq 2 ]]; then
 sed -i 's/icons\/.*/icons\/circles/g' ~/.fvwm/config && exit 0
-
+xdotool key super+shift+r
 elif [[ $foo -eq 3 ]]; then
 sed -i 's/icons\/.*/icons\/w10/g' ~/.fvwm/config && exit 0
-
+xdotool key super+shift+r
 elif [[ $foo -eq 4 ]]; then
 sed -i 's/icons\/.*/icons\/macos/g' ~/.fvwm/config && exit 0
-
+xdotool key super+shift+r
 elif [[ $foo -eq 5 ]]; then
 sed -i 's/icons\/.*/icons\/classic/g' ~/.fvwm/config
-
+xdotool key super+shift+r
 elif [[ $foo -eq 6 ]]; then
 sed -i 's/icons\/.*/icons\/wcircles/g' ~/.fvwm/config	
-
+xdotool key super+shift+r
 fi
+
 }
+
+# Conjunto de ferramentas para obter capturas de tela
 
 PRINT(){
 	pkill yad
@@ -191,6 +234,8 @@ scrot -d 2 -b -u 'My_Window_%a-%d%b%y_%H.%M.png' -e 'viewnior ~/$f' && exit 0
 
 fi
 }
+
+# Ferramemta para controle de musicas
 
 MPD(){
 	pkill yad
@@ -235,15 +280,16 @@ elif [[ $foo -eq 8 ]]; then
 fi
 }
 
+# Ferramenta para alterar os plano de fundo de forma aleatoria
+
 WALL(){
 
 img=(`find ~/Imagens -name '*' -exec file {} \; | grep -o -P '^.+: \w+ image' | cut -d':' -f1`)
    feh --bg-scale "${img[$RANDOM % ${#img[@]} ]}"
 
-exec $img
-
 }
 
+# Ferramenta para alterar a transparencia da barra
 
 TRANSPARENCE_BAR(){
 pkill yad
@@ -264,6 +310,8 @@ YAD=$(yad --posx=46 --posy=388 --text="Transparency Bar" \
 	done 
 }
 
+# Ferramenta para execuar aplicaçoes
+
 RUN_APP(){
 
 RUN=$(
@@ -271,13 +319,18 @@ RUN=$(
 	yad --licon ~/.fvwm/yad/Icons/terminal.png \
 		--no-buttons \
 		--entry \
-		--posx=46 --posy=470 \
+		--center \
 		--completion \
 		--fixed)
 
 exec $RUN 
 
 }
+
+# Ferramenta para pesquisar na web.
+# Por padrao o motor de busca é o chromium, podendo ser alterado para qualquer outro,
+# mudando "chromium" na linha "chromium http://www.google.co.uk/search?q="$go""
+# para o seu navegador.
 
 WEB_SEARCH(){
 pkill yad
@@ -287,7 +340,7 @@ Entry(){
 	yad --licon ~/.fvwm/yad/Icons/google.png \
 		--no-buttons \
 		--entry \
-		--posx=46 --posy=510 \
+		--center \
 		--completion \
 		--fixed
 }
@@ -302,6 +355,8 @@ fi
 
 Search
 }
+
+# Ferramenta para gerenciar as sessoes
 
 POWER(){
 pkill yad
