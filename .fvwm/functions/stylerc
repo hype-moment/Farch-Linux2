@@ -2,8 +2,12 @@
 # Aqui estao os estilos e comportamentos da maioria da ferramentas do sistemas
 #==============================================================================
 
+# Relevante apenas para o script
+
+Esse !Title
+
 # Fonte padrao do sistema, da barra de titulus e dos menus
-DefaultFont "xft:Nasa :size=10"
+DefaultFont "xft:Nasa :size=8"
 
 # Posiciona algumas janelas ao centro, porem nao funciona com todas
 Style * PositionPlacement Center
@@ -15,12 +19,12 @@ Style * FPGrabFocusTransient, FPReleaseFocusTransient
 
 # Enrrolar e desenrrolar as janelas
 # Estilo e velocidade
-Style * WindowShadeScrolls, WindowShadeSteps 30
+Style * WindowShadeScrolls, WindowShadeSteps 10
 
-# Desative a exibição de ícones na área de trabalho
-Style * !Icon
+# Estilo geral
+Style * !Icon, Title
 
-# Desativa o efeti de grade a mo mover ou redimencionar uma janela
+# Desativa o efeitos de grade a mo mover ou redimencionar uma janela
 Style * CascadePlacement
 OpaqueMoveSize unlimited
 Style * ResizeOpaque, SnapAttraction 50 SameType ScreenAll, SnapGrid
@@ -31,28 +35,19 @@ Style * ResizeOpaque, SnapAttraction 50 SameType ScreenAll, SnapGrid
 # entao algumas configuraçoe se fazem importantes
 #==========================================================
 
-Style tint2 !Title, PositionPlacement Right, !Borders, !Handles, Sticky, \
-                 !WindowListSkip, !NeverFocus
+Style tilix Title, PositionPlacement Center
 
-Style xfce4-panel !Title, PositionPlacement Right, !Borders, Handles, Sticky, \
-                 WindowListSkip, NeverFocus
 
-Style plank !Title, PositionPlacement Right, !Borders, Handles, Sticky, \
-              
-Style polybar !Title, PositionPlacement Right, !Borders, Handles, Sticky, \
 
 Style feh PositionPlacement Center, !Title, Borders
 
-Style viewnior PositionPlacement Center, Title, Borders
+Style viewnior PositionPlacement Center, !Title, Borders
 
 Style * chromium PositionPlacement Center
 
 Style "xfce4-terminal" PositionPlacement Center
 
 Style thunar PositionPlacement Center
-
-Style yad !Title, !Borders, !Handles, !Sticky \
-				WindowListSkip, NeverFocus
 
 Style xfce4-appfinder !Title, !Borders, !Handles, !Sticky \
 				WindowListSkip, NeverFocus
@@ -62,8 +57,6 @@ Style lxappearance PositionPlacement Center
 Style subl PositionPlacement Center
 
 Style krita PositionPlacement Center
-
-Style ConfirmQuit !Title, PositionPlacement Center, WindowListSkip, Layer 6
 
 # Nomes das areas de trabalho virtuais
 DesktopSize 3x3
@@ -92,10 +85,10 @@ Style * EdgeMoveResistance 350
 
 # Distancia das janelas referente as bordas
 #                [Esquerda]  [Direita] [Topo]  [Baixo]
-EwmhBaseStruts 		 47       	0 	     34	      4
+EwmhBaseStruts 		 50        	0 	     40	      0
 
 # Ocultar janela de geometria ao mover e redimensionar
 HideGeometryWindow    Always
-Style * BorderUnderTitle
+Style * BorderUnder !Title
 Style * ResizeOutlineThin
 

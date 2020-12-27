@@ -39,3 +39,27 @@ AddToFunc SnapQuarter
 + I Maximize True 100 50
 + I Move 0 -0
 + I Raise
+
+DestroyFunc SnapTopRight
+AddToFunc SnapTopRight
++ I Maximize True 50 50
++ I Move -0 0
++ I Raise
+
+DestroyFunc SnapTopLeft
+AddToFunc SnapTopLeft
++ I Maximize True 50 50
++ I Move 0 0
++ I Raise
+
+DestroyFunc SnapBottonRight
+AddToFunc SnapBottonRight
++ I Maximize True 50 50
++ I Move 0 -0
++ I Raise
+
+DestroyFunc SnapBottonLeft
+AddToFunc SnapBottonLeft
++ I Maximize True 50 50
++ I Move -0 -0
++ I Raise

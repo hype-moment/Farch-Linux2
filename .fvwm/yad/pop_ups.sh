@@ -38,17 +38,18 @@ CALENDAR(){
 # Controle da transparencia das bordas das janelas e das barras de titulos
 
 FRAME_TRANSPARENCE(){
-Value=$(cat ~/.fvwm/picom.conf | grep frame-opacity | awk '{print $3}' | sed 's/.*\.//g;s/;//g')
+Value=$(cat ~/.fvwm/functions/window_decorrc | grep Tint | awk '{print $3}' | sed -n 1p)
 YAD=$(pkill yad
 	  yad --scale --posx=46 --posy=76 \
 		  --text="Frame Transparency" \
-		  --width=300 --inc-buttons --min-value=1 --max-value=99 --value="$Value")
+		  --width=300 --inc-buttons --min-value=1 --max-value=100 --value="$Value")
 
 	for i in "$YAD"; do
 		if [[ $i > 0 ]];then
-			sed -i "s/frame-opacity = 0.*/frame-opacity = 0.$i;/g" ~/.fvwm/picom.conf
+			sed -i "s/$Value/$i/g" ~/.fvwm/functions/window_decorrc
+			xdotool key super+shift+r
 		fi
-	done 
+	done
 }
 
 # Controle do modo podendo ser usado o tema escuro ou claro
@@ -67,7 +68,7 @@ foo=$?
 
 if [[ $foo -eq 1 ]]; then
 yad --timeout=5 --timeout-indicator=bottom \
-	--width=500 --center \
+	--width=500 --center --pulsate --rtl \
    	--text="Applying theme. Please wait" --text-align=center --auto-close \
    	--no-buttons
 sleep 1
@@ -121,16 +122,16 @@ POSITION(){
 foo=$?
 
 if [[ $foo -eq 1 ]]; then
-sed -i 's/TitleAt.*/TitleAtLeft/g' ~/.fvwm/functions/window_decorrc && exit 0
+sed -i 's/TitleAt.*/TitleAtLeft/g' ~/.fvwm/functions/window_decorrc 
 xdotool key super+shift+r
 elif [[ $foo -eq 2 ]]; then
-sed -i 's/TitleAt.*/TitleAtTop/g' ~/.fvwm/functions/window_decorrc && exit 0
+sed -i 's/TitleAt.*/TitleAtTop/g' ~/.fvwm/functions/window_decorrc 
 xdotool key super+shift+r
 elif [[ $foo -eq 3 ]]; then
-sed -i 's/TitleAt.*/TitleAtRight/g' ~/.fvwm/functions/window_decorrc && exit 0
+sed -i 's/TitleAt.*/TitleAtRight/g' ~/.fvwm/functions/window_decorrc
 xdotool key super+shift+r
 elif [[ $foo -eq 4 ]]; then
-sed -i 's/TitleAt.*/TitleAtBottom/g' ~/.fvwm/functions/window_decorrc && exit 0
+sed -i 's/TitleAt.*/TitleAtBottom/g' ~/.fvwm/functions/window_decorrc
 xdotool key super+shift+r
 fi
 }
@@ -139,35 +140,32 @@ fi
 # e alguns aspectos dos temas GTK como, caixas de dialogos,mesnus etc...
 
 SET_COLOR(){
-Value=$(cat ~/.fvwm/functions/window_decorrc | grep Tint | awk '{print $2}')
+Value=$(cat ~/.fvwm/functions/window_decorrc | grep Tint | awk '{print $2}' | sed -n 1p)
 Color_Dark=$(cat ~/.themes/Midnight/gtk-3.0/gtk.css | grep secondary-caret | awk '{print $2}' | sed 's/;//g')
-Act_Color=$(cat ~/.fvwm/functions/window_decorrc | grep Tint | awk '{print $2}' | sed 's/#//g')
-frame_=$(cat ~/.config/tint2/tint2rc | grep "background_color =" | awk '{print $4}')
+#Act_Color=$(cat ~/.fvwm/functions/window_decorrc | grep Tint | awk '{print $2}' | sed -n 1p | sed 's/#//g')
+frame=$(cat ~/.fvwm/functions/window_decorrc | grep Tint | awk '{print $3}' | sed -n 1p)
 
-YAD=$(pkill yad
-      yad --posx=46 --posy=193 --text"Theme Colors" \
-		  --init-color=$Value --color --gtk-palette --fixed \ )  
+YAD=$(
+	yad --color --gtk-palette 
+)
 
+OUT=$(echo "$YAD" | sed 's/#//g')
 
-	for i in "$YAD"; do
-		if [[ "$i" != "#121212" ]];then
-			sed -i "s/$Color_Dark/$i/g" ~/.themes/Midnight/gtk-3.0/gtk.css
-			sed -i "s/Tint .*/Tint $i 100/g" ~/.fvwm/functions/window_decorrc
-			sed -i "s/border_color.*/border_color = $i $frame_/g" ~/.config/tint2/tint2rc
-			sed -i "s/border_color.*/border_color = $i $frame_/g" ~/.config/tint2/tools.tint2rc
-			pkill tint2
-			tint2 -c ~/.config/tint2/tools.tint2rc & tint2
-			xdotool key super+shift+r
-		elif [[ "$i" == "#121212" ]]; then
-			sed -i "s/Tint .*/Tint $i 100/g" ~/.fvwm/functions/window_decorrc
-			sed -i "s/border_color.*/border_color = $i $frame_/g" ~/.config/tint2/tint2rc
-			sed -i "s/border_color.*/border_color = $i $frame_/g" ~/.config/tint2/tools.tint2rc
-			pkill tint2
-			tint2 -c ~/.config/tint2/tools.tint2rc & tint2
-			xdotool key super+shift+r
-		fi
-	done
-
+if [[ $OUT == 121212 ]]; then
+sed -i "s/Tint .*/Tint "$Value" $frame/g" ~/.fvwm/functions/window_decorrc
+elif [[ $OUT == FFFFFF ]]; then
+sed -i "s/Tint .*/Tint "$Value" $frame/g" ~/.fvwm/functions/window_decorrc
+elif [[ $OUT == F5F5F5 ]]; then
+sed -i "s/Tint .*/Tint "$Value" $frame/g" ~/.fvwm/functions/window_decorrc
+elif [[ $OUT == 131313 ]]; then
+sed -i "s/Tint .*/Tint "$Value" $frame/g" ~/.fvwm/functions/window_decorrc
+elif [[ $OUT < 0 ]]; then
+sed -i "s/Tint .*/Tint "$Value" $frame/g" ~/.fvwm/functions/window_decorrc
+else
+sed -i "s/Tint .*/Tint "#$OUT" $frame/g" ~/.fvwm/functions/window_decorrc
+sed -i "s/$Color_Dark/"#$OUT"/g" ~/.themes/Midnight/gtk-3.0/gtk.css
+xdotool key super+shift+r
+fi
 }
 
 # Ferramenta para alterar os icones das barras de titulos
@@ -182,26 +180,34 @@ SET_ICONS(){
 		--button="MacOS":4 \
 		--button="Classic":5 \
 		--button="Simple":6 \
+		--button="Fit":7 \
+		--button="Fit Modern":8 \
 
 foo=$?
 
 if [[ $foo -eq 1 ]]; then
-sed -i 's/icons\/.*/icons\/blocks/g' ~/.fvwm/config && exit 0
+sed -i 's/icons\/.*/icons\/blocks/g' ~/.fvwm/config 
 xdotool key super+shift+r
 elif [[ $foo -eq 2 ]]; then
-sed -i 's/icons\/.*/icons\/circles/g' ~/.fvwm/config && exit 0
+sed -i 's/icons\/.*/icons\/circles/g' ~/.fvwm/config 
 xdotool key super+shift+r
 elif [[ $foo -eq 3 ]]; then
-sed -i 's/icons\/.*/icons\/w10/g' ~/.fvwm/config && exit 0
+sed -i 's/icons\/.*/icons\/w10/g' ~/.fvwm/config 
 xdotool key super+shift+r
 elif [[ $foo -eq 4 ]]; then
-sed -i 's/icons\/.*/icons\/macos/g' ~/.fvwm/config && exit 0
+sed -i 's/icons\/.*/icons\/macos/g' ~/.fvwm/config 
 xdotool key super+shift+r
 elif [[ $foo -eq 5 ]]; then
 sed -i 's/icons\/.*/icons\/classic/g' ~/.fvwm/config
 xdotool key super+shift+r
 elif [[ $foo -eq 6 ]]; then
 sed -i 's/icons\/.*/icons\/wcircles/g' ~/.fvwm/config	
+xdotool key super+shift+r
+elif [[ $foo -eq 7 ]]; then
+sed -i 's/icons\/.*/icons\/fit/g' ~/.fvwm/config	
+xdotool key super+shift+r
+elif [[ $foo -eq 8 ]]; then
+sed -i 's/icons\/.*/icons\/modern/g' ~/.fvwm/config	
 xdotool key super+shift+r
 fi
 

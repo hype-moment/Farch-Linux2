@@ -21,12 +21,11 @@ AddToFunc SwitchWindow
 
 Key Tab A 4  SwitchWindow
 
-
 # Essa função ignora o NunLock e o CapsLock
 IgnoreModifiers L25
 
 # Aqui estarão os programas que sarao abertos por atalhos do teclado
-Key Return A 4 Exec xfce4-terminal 		 # > Terminal
+Key Return A 4 Exec tilix 		 		 # > Terminal
 Key c A 4 Exec chromium                  # > Navegator
 Key f A 4 Exec chromium faceboock.com 	 # > FaceBook
 Key y A 4 Exec chromium youtube.com 	 # > YouTube
@@ -40,7 +39,8 @@ Key XF86AudioMute A A Exec pactl set-sink-mute 0 toggle 	      # > Volume Muted
 
 # Thumbnail
 
-Key q A 4S Thumbnail
+Key z A 4 Thumbnail
+Key r a 4 ToggleTitle
 
 # Esse comando do teclado ira tirar um print da tela
 Key Print A 4 Exec exec scrot 'My_FVWM_%a-%d%b%y_%H.%M.png' -e 'viewnior ~/$f'
@@ -80,8 +80,14 @@ Key Right A 4 SnapRight		# Divide a janela em foco no lado direto da tela
 Key Up A 4 SnapHalf			# Divide a janela em foco no lado superior da tela
 Key Down A 4 SnapQuarter	# Divide a janela em foco no lado inferior da tela
 
+Key Up A 4S SnapTopLeft
+Key Right A 4S SnapTopRight
+Key Left A 4S SnapBottonRight
+Key Down A 4S SnapBottonLeft
+
 # Movimento das janelas
-Key Left A C4 Move 0 w+0 Maximize True 50 50 	# Move as janelas em foco para a esquerda, sem conciderar suas dimenssões
-Key Right A C4 Move -0 w+0 						# Move as janelas em foco para a dierita, sem conciderar suas dimenssões
-Key Up A C4 Move w+0 0							# Move as janelas em foco para a o topo, sem conciderar suas dimenssões
-Key Down A C4 Move w+0 -0						# Move as janelas em foco para baixo, sem conciderar suas dimenssões
+Key Left A C4 Resize    		# Move as janelas em foco para a esquerda, sem conciderar suas dimenssões
+Key Right A C4 Resize w-2 		# Move as janelas em foco para a dierita, sem conciderar suas dimenssões
+Key Up A C4 Resize 10 w-2			# Move as janelas em foco para a o topo, sem conciderar suas dimenssões
+Key Down A C4 Resize 40 w+3 		# Move as janelas em foco para baixo, sem conciderar suas dimenssões
+

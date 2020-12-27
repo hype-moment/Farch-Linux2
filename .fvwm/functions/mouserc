@@ -12,13 +12,11 @@ MoveThreshold 3
 Style * SloppyFocus, MouseFocusClickRaises
 
 # açoes do mouse no titulo da janela
-Mouse 1 T A RaiseMoveX Move Maximize 				# Move a janelas
-Mouse 1 FS A RaiseMove Resize 						# Redimenciona a janela
+Mouse 1 A 4 RaiseMoveX Move         				# Move a janelas
+Mouse 3 A 4 RaiseMove Resize 						# Redimenciona a janela
 Mouse 4 T A WindowShade True 						# Enrrola a janela
 Mouse 5 T A WindowShade False 						# Desenrrola a janela
-#Mouse 3 T A Menu MenuWindowOps 					# Abre o menu de opçoes da janela
-
-Mouse 1 A 4 Move 									# Super + click direito do mouse dentro da janela, move a janela
+Mouse 1 A C Thumbnail			 					# Abre o menu de opçoes da janela
 
 ## Raising Window
 DestroyFunc RaiseMoveX

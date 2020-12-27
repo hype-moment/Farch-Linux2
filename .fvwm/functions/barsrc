@@ -1,0 +1,12 @@
+Style tint2 !Title, PositionPlacement Right, !Borders, !Handles, Sticky, \
+                 !WindowListSkip, !NeverFocus
+
+Style xfce4-panel !Title, PositionPlacement Center, Borders, Handles, Sticky, \
+                 WindowListSkip, NeverFocus
+
+Style yad !Title, !Borders, !Handles, !Sticky \
+				WindowListSkip, NeverFocus
+
+Style plank !Title, PositionPlacement Right, !Borders, Handles, Sticky, \
+              
+Style polybar !Title, PositionPlacement Right, !Borders, Handles, Sticky, \
