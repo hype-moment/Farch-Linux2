@@ -14,7 +14,7 @@
 BORDERS_RADIUS(){
 Value=$(cat ~/.fvwm/picom.conf | grep corner-radius | sed 's/.*= //g;s/;//g')
 YAD=$(pkill yad
-		yad --text="Border Radius" --scale --posx=46 --posy=37 \
+		yad --text="Border Radius" --scale --posx=50 --posy=37 \
 			--width=300 --inc-buttons --min-value=1 --max-value=12 --value="$Value" )
 	  	
 	for i in "$YAD"; do
@@ -40,7 +40,7 @@ CALENDAR(){
 FRAME_TRANSPARENCE(){
 Value=$(cat ~/.fvwm/functions/window_decorrc | grep Tint | awk '{print $3}' | sed -n 1p)
 YAD=$(pkill yad
-	  yad --scale --posx=46 --posy=76 \
+	  yad --scale --posx=50 --posy=76 \
 		  --text="Frame Transparency" \
 		  --width=300 --inc-buttons --min-value=1 --max-value=100 --value="$Value")
 
@@ -59,7 +59,7 @@ THEME_MODE(){
 Alfa=$(cat ~/.config/tint2/tools.tint2rc | grep "background_color =" | awk '{print $4}')
 	
 pkill yad
-yad --posx=46 --posy=115 --text="Mode"\
+yad --posx=50 --posy=115 --text="Mode"\
 	--fixed --buttons-layout=center \
 	--button="Dark !$HOME/.fvwm/yad/Icons/dark.png":1 \
 	--button="Light !$HOME/.fvwm/yad/Icons/light.png":2 \
@@ -112,7 +112,7 @@ fi
 
 POSITION(){
 	pkill yad
-	yad --posx=46 --posy=153 --buttons-layout=center \
+	yad --posx=50 --posy=153 --buttons-layout=center \
 		--fixed --text="Title Bar Position" \
 		--button="Left !$HOME/.fvwm/yad/Icons/left.png":1 \
 		--button="Top !$HOME/.fvwm/yad/Icons/top.png":2 \
@@ -142,11 +142,12 @@ fi
 SET_COLOR(){
 Value=$(cat ~/.fvwm/functions/window_decorrc | grep Tint | awk '{print $2}' | sed -n 1p)
 Color_Dark=$(cat ~/.themes/Midnight/gtk-3.0/gtk.css | grep secondary-caret | awk '{print $2}' | sed 's/;//g')
-#Act_Color=$(cat ~/.fvwm/functions/window_decorrc | grep Tint | awk '{print $2}' | sed -n 1p | sed 's/#//g')
 frame=$(cat ~/.fvwm/functions/window_decorrc | grep Tint | awk '{print $3}' | sed -n 1p)
 
-YAD=$(
-	yad --color --gtk-palette 
+YAD=$(pkill yad
+	yad --color --gtk-palette \
+		--posx=50 --posy=200 \
+		--fixed
 )
 
 OUT=$(echo "$YAD" | sed 's/#//g')
@@ -172,7 +173,7 @@ fi
 
 SET_ICONS(){
 	pkill yad	
-	yad --posx=46 --posy=232 --text="Window Icons" \
+	yad --posx=50 --posy=232 --text="Window Icons" \
 		--fixed --buttons-layout=center \
 		--button="Blocks":1 \
 		--button="Cicles":2 \
@@ -217,7 +218,7 @@ fi
 
 PRINT(){
 	pkill yad
-	yad --posx=46 --posy=270 --buttons-layout=center \
+	yad --posx=50 --posy=270 --buttons-layout=center \
 		--fixed  --text="ScreenShot" \
 		--button="!$HOME/.fvwm/yad/Icons/shot.png":1 \
 		--button="!$HOME/.fvwm/yad/Icons/cut.png":2 \
@@ -245,7 +246,7 @@ fi
 
 MPD(){
 	pkill yad
-	yad --posx=46 --posy=310 --buttons-layout=center \
+	yad --posx=50 --posy=310 --buttons-layout=center \
 		--fixed --text="Music Control" \
 		--button="!$HOME/.fvwm/yad/Icons/music.png":1 \
 		--button="!$HOME/.fvwm/yad/Icons/prev.png":2 \
@@ -301,7 +302,7 @@ TRANSPARENCE_BAR(){
 pkill yad
 Value=$(cat ~/.config/tint2/tools.tint2rc | grep "background_color =" | awk '{print $4}')
 Color=$(cat ~/.config/tint2/tools.tint2rc | grep "background_color =" | awk '{print $3}')
-YAD=$(yad --posx=46 --posy=388 --text="Transparency Bar" \
+YAD=$(yad --posx=50 --posy=388 --text="Transparency Bar" \
           --scale --min-value=1 --max-value=99 --value="$Value" --fixed)
 
 	for i in "$YAD"; do
